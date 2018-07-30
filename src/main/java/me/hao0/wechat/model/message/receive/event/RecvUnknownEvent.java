@@ -8,6 +8,8 @@ package me.hao0.wechat.model.message.receive.event;
  */
 public class RecvUnknownEvent extends RecvEvent {
 
+	private static final long serialVersionUID = 1L;
+	
     public RecvUnknownEvent(RecvEvent e){
         super(e);
         this.eventType = e.eventType;

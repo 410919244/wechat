@@ -10,7 +10,9 @@ package me.hao0.wechat.model.message.receive.event;
  * Date: 9/11/15
  */
 public class RecvTemplateSendJobFinishEvent extends RecvEvent {
-
+	
+	private static final long serialVersionUID = 1L;
+	
     /**
      * 模版消息送达状态：
      * <p>

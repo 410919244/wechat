@@ -15,6 +15,8 @@ import java.util.Date;
  */
 public class User implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
     /**
      * 0未关注，1已关注
      */

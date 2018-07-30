@@ -11,7 +11,9 @@ import me.hao0.wechat.model.message.receive.RecvMessageType;
  */
 public class RecvEvent extends RecvMessage {
 
-    /**
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * 事件类型:
      * @see RecvEvent
      */

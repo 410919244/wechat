@@ -1,13 +1,13 @@
 package me.hao0.wechat.serializer;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import me.hao0.wechat.model.data.msg.MsgType;
-import me.hao0.wechat.model.data.user.UserSource;
 
-import java.io.IOException;
+import me.hao0.wechat.model.data.msg.MsgType;
 
 /**
  * Author: haolin

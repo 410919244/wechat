@@ -8,7 +8,9 @@ package me.hao0.wechat.model.message.receive.event;
  */
 public class RecvMenuEvent extends RecvEvent {
 
-    /**
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * eventType为CLICK时: 与自定义菜单接口中KEY值对应
      * eventType为VIEW时: 设置的跳转URL
      */

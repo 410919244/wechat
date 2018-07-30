@@ -11,6 +11,8 @@ import java.util.Arrays;
  */
 public class UserInfo implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
     @JsonProperty("openid")
     private String openId;
 

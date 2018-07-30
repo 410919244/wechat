@@ -2,6 +2,8 @@ package me.hao0.wechat.exception;
 
 import java.util.Map;
 
+import me.hao0.wechat.model.base.WechatResponse;
+
 /**
  * 微信异常，微信服务器返回错误时抛出的异常
  * Author: haolin
@@ -11,7 +13,9 @@ import java.util.Map;
  */
 public class WechatException extends RuntimeException {
 
-    /**
+	private static final long serialVersionUID = 1L;
+	
+	/**
      * 微信返回的errcode
      */
     private Integer code;
@@ -43,5 +47,31 @@ public class WechatException extends RuntimeException {
 
     public Integer getCode() {
         return code;
+    }
+    
+    public static <T extends WechatResponse>  WechatException getInstance(T resp) {
+    	String message = ErrorMessage.tips.get(resp.getErrcode());
+        if (message != null) {
+            return new WechatException(String.format("%s:%s", resp.getErrcode(), message));
+        } else {
+            return new WechatException(String.format("%s:%s", resp.getErrcode(), resp.getErrmsg()));
+        }
+    }
+    
+    /**
+     * 返回中文提示异常
+     *
+     * @param errMap
+     * @author zJun
+     * @date 2018年1月3日 下午2:04:34
+     */
+    public static WechatException getInstance(Map<String, ?> errMap) {
+        Integer code = (Integer) errMap.get("errcode");
+        String message = ErrorMessage.tips.get(code);
+        if (message != null) {
+            return new WechatException(message);
+        } else {
+            return new WechatException(errMap);
+        }
     }
 }

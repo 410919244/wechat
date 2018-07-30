@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 public abstract class CommonSummary implements Serializable {
 
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * 图文页（点击群发图文卡片进入的页面）的阅读人数
      */
     @JsonProperty("int_page_read_user")

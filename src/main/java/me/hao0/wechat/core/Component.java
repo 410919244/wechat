@@ -1,8 +1,13 @@
 package me.hao0.wechat.core;
 
+import static me.hao0.common.util.Preconditions.checkNotNullAndEmpty;
+
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Map;
+
+import me.hao0.common.json.Jsons;
+import me.hao0.wechat.model.base.WechatResponse;
 
 /**
  * 微信组件需要继承该类
@@ -41,6 +46,33 @@ public abstract class Component {
      */
     protected Map<String, Object> doPost(String url, String body){
         return wechat.doPost(url, body);
+    }
+    
+    /**
+     * POST 请求
+     *
+     * @param url
+     * @param params
+     * @param respClass
+     * @param <T>
+     * @return
+     * @author Shinez
+     * @date 2018年1月20日 21:44:30
+     */
+    protected <T extends WechatResponse> T doPost(String url, Object params, Class<T> respClass) {
+        return wechat.doPost(url, Jsons.DEFAULT.toJson(params), respClass);
+    }
+    
+    /**
+     * POST 请求
+     * @param url
+     * @param params
+     * @return
+     * @author Shinez
+     * @date 2018年1月20日 21:44:30
+     */
+    protected Map<String, Object> doPost(String url, Object params) {
+    	return wechat.doPost(url, Jsons.DEFAULT.toJson(params));
     }
 
     /**
@@ -84,5 +116,18 @@ public abstract class Component {
      */
     protected <T> void doAsync(AsyncFunction<T> af){
         wechat.doAsync(af);
+    }
+    
+    /**
+     * 检查参数
+     *
+     * @param accessToken
+     * @param json
+     * @author zJun
+     * @date 2018年1月5日 上午10:26:13
+     */
+    protected void checkData(String accessToken, String json) {
+        checkNotNullAndEmpty(accessToken, "accessToken");
+        checkNotNullAndEmpty(json, "json");
     }
 }

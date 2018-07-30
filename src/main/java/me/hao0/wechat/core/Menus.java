@@ -76,7 +76,7 @@ public final class Menus extends Component {
 
         String url = GET + accessToken;
         Map<String, Object> resp =  doGet(url);
-        String jsonMenu = Jsons.DEFAULT.toJson(((Map) resp.get("menu")).get("button"));
+        String jsonMenu = Jsons.DEFAULT.toJson(((Map<?, ?>) resp.get("menu")).get("button"));
         return Jsons.EXCLUDE_DEFAULT.fromJson(jsonMenu, ARRAY_LIST_MENU_TYPE);
     }
 

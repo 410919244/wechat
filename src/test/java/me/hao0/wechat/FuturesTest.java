@@ -17,9 +17,11 @@ import java.util.concurrent.Executors;
  * Email: haolin.h0@gmail.com
  * Date: 17/11/15
  */
+@SuppressWarnings("all")
 public class FuturesTest {
 
-    @Test
+    
+	@Test
     public void testGuavaFuture1() throws ExecutionException, InterruptedException {
 
         ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));

@@ -1,10 +1,20 @@
 package me.hao0.wechat.core;
 
+import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+
 import me.hao0.common.http.Http;
 import me.hao0.common.json.Jsons;
 import me.hao0.common.util.Fields;
@@ -14,14 +24,9 @@ import me.hao0.wechat.loader.DefaultAccessTokenLoader;
 import me.hao0.wechat.loader.DefaultTicketLoader;
 import me.hao0.wechat.loader.TicketLoader;
 import me.hao0.wechat.model.base.AccessToken;
+import me.hao0.wechat.model.base.WechatResponse;
 import me.hao0.wechat.model.js.Ticket;
 import me.hao0.wechat.model.js.TicketType;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * 微信核心组件库
@@ -110,7 +115,7 @@ public final class Wechat {
             CacheBuilder.newBuilder().build(new CacheLoader<String, Component>() {
                 @Override
                 public Component load(String classFullName) throws Exception {
-                    Class clazz = Class.forName(classFullName);
+                    Class<?> clazz = Class.forName(classFullName);
                     Object comp = clazz.newInstance();
                     injectWechat(clazz, comp);
                     return (Component)comp;
@@ -174,7 +179,7 @@ public final class Wechat {
         return (JsSdks)components.getUnchecked(JSSDKS);
     }
 
-    private void injectWechat(Class clazz, Object comp) throws NoSuchFieldException {
+    private void injectWechat(Class<?> clazz, Object comp) throws NoSuchFieldException {
         Field wechat = clazz.getSuperclass().getDeclaredField("wechat");
         Fields.put(comp, wechat, this);
     }
@@ -238,6 +243,28 @@ public final class Wechat {
         Integer errcode = (Integer)resp.get(ERROR_CODE);
         if (errcode != null && errcode != 0){
             throw new WechatException(resp);
+        }
+        return resp;
+    }
+    
+    <T extends WechatResponse> T doPost(String url, Object body, Class<T> responseClass) {
+        Http http = Http.post(url);
+        if (body != null) {
+            http.body(Jsons.DEFAULT.toJson(body));
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        JavaType javaType = objectMapper.constructType(responseClass);
+
+        T resp = http.request(javaType);
+        if (resp == null) {
+            throw new WechatException("can not get anything from this request,the response is null");
+        }
+
+        Integer errCode = resp.getErrcode();
+        if (errCode != null && errCode != 0) {
+            throw WechatException.getInstance(resp);
         }
         return resp;
     }

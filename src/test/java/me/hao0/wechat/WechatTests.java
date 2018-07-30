@@ -70,6 +70,7 @@ import static org.junit.Assert.*;
  * Email: haolin.h0@gmail.com
  * Date: 5/11/15
  */
+@SuppressWarnings("all")
 public class WechatTests {
 
     private Wechat wechat;
