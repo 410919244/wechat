@@ -60,7 +60,7 @@ public abstract class Component {
      * @date 2018年1月20日 21:44:30
      */
     protected <T extends WechatResponse> T doPost(String url, Object params, Class<T> respClass) {
-        return wechat.doPost(url, Jsons.EXCLUDE_EMPTY.toJson(params), respClass);
+        return wechat.doPost(url, params, respClass);
     }
     
     /**
