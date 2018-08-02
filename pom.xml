@@ -12,6 +12,13 @@
 	<description>A Lightweight Wechat Component</description>
 	<url>https://github.com/ihaolin/wechat</url>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<java.version>1.8</java.version>
+	</properties>
+
 	<dependencies>
 
 		<dependency>
@@ -73,60 +80,50 @@
 		<profile>
 			<id>release</id>
 			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>2.2.1</version>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<!-- Javadoc -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.10.3</version>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<!-- GPG -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
-						<executions>
-							<execution>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
+				<!-- <plugins> -->
+				<!-- <plugin> -->
+				<!-- <groupId>org.apache.maven.plugins</groupId> -->
+				<!-- <artifactId>maven-source-plugin</artifactId> -->
+				<!-- <version>2.2.1</version> -->
+				<!-- <executions> -->
+				<!-- <execution> -->
+				<!-- <phase>package</phase> -->
+				<!-- <goals> -->
+				<!-- <goal>jar-no-fork</goal> -->
+				<!-- </goals> -->
+				<!-- </execution> -->
+				<!-- </executions> -->
+				<!-- </plugin> -->
+				<!-- Javadoc -->
+				<!-- <plugin> -->
+				<!-- <groupId>org.apache.maven.plugins</groupId> -->
+				<!-- <artifactId>maven-javadoc-plugin</artifactId> -->
+				<!-- <version>2.10.3</version> -->
+				<!-- <executions> -->
+				<!-- <execution> -->
+				<!-- <phase>package</phase> -->
+				<!-- <goals> -->
+				<!-- <goal>jar</goal> -->
+				<!-- </goals> -->
+				<!-- </execution> -->
+				<!-- </executions> -->
+				<!-- </plugin> -->
+				<!-- GPG -->
+				<!-- <plugin> -->
+				<!-- <groupId>org.apache.maven.plugins</groupId> -->
+				<!-- <artifactId>maven-gpg-plugin</artifactId> -->
+				<!-- <version>1.6</version> -->
+				<!-- <executions> -->
+				<!-- <execution> -->
+				<!-- <phase>verify</phase> -->
+				<!-- <goals> -->
+				<!-- <goal>sign</goal> -->
+				<!-- </goals> -->
+				<!-- </execution> -->
+				<!-- </executions> -->
+				<!-- </plugin> -->
+				<!-- </plugins> -->
 			</build>
-			<distributionManagement>
-				<repository>
-					<id>rdc-releases</id>
-					<url>https://repo.rdc.aliyun.com/repository/20927-release-EZ6NOh/</url>
-				</repository>
-				<snapshotRepository>
-					<id>rdc-snapshots</id>
-					<url>https://repo.rdc.aliyun.com/repository/20927-snapshot-vxVq6p/</url>
-				</snapshotRepository>
-			</distributionManagement>
 		</profile>
 	</profiles>
 
@@ -137,17 +134,28 @@
 		</license>
 	</licenses>
 
-	<developers>
-		<developer>
-			<name>haolin</name>
-			<email>haolin.h0@gmail.com</email>
-		</developer>
-	</developers>
+	<!-- <developers> -->
+	<!-- <developer> -->
+	<!-- <name>haolin</name> -->
+	<!-- <email>haolin.h0@gmail.com</email> -->
+	<!-- </developer> -->
+	<!-- </developers> -->
 
-	<scm>
-		<connection>scm:git:git@github.com:ihaolin/wechat.git</connection>
-		<developerConnection>scm:git:git@github.com:ihaolin/wechat.git</developerConnection>
-		<url>git@github.com:ihaolin/wechat.git</url>
-	</scm>
+	<!-- <scm> -->
+	<!-- <connection>scm:git:git@github.com:ihaolin/wechat.git</connection> -->
+	<!-- <developerConnection>scm:git:git@github.com:ihaolin/wechat.git</developerConnection> -->
+	<!-- <url>git@github.com:ihaolin/wechat.git</url> -->
+	<!-- </scm> -->
+
+	<distributionManagement>
+		<repository>
+			<id>rdc-releases</id>
+			<url>https://repo.rdc.aliyun.com/repository/20927-release-EZ6NOh/</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+			<url>https://repo.rdc.aliyun.com/repository/20927-snapshot-vxVq6p/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>

@@ -94,12 +94,14 @@ public final class Wechat {
     private static final String DATAS = "me.hao0.wechat.core.Datas";
 
     private static final String JSSDKS = "me.hao0.wechat.core.JsSdks";
+    
+    private static final String CARDS = "me.hao0.wechat.core.Cards";
 
     private static final AccessTokenLoader DEFAULT_ACCESS_TOKEN_LOADER = new DefaultAccessTokenLoader();
 
     private static final DefaultTicketLoader DEFAULT_TICKET_LOADER = new DefaultTicketLoader();
 
-    private static final JavaType MAP_STRING_OBJ_TYPE = Jsons.DEFAULT.createCollectionType(Map.class, String.class, Object.class);
+    private static final JavaType MAP_STRING_OBJ_TYPE = Jsons.EXCLUDE_EMPTY.createCollectionType(Map.class, String.class, Object.class);
 
     private static final ExecutorService DEFAULT_EXECUTOR = Executors.newFixedThreadPool(
             Runtime.getRuntime().availableProcessors() + 1, new ThreadFactory() {
@@ -122,6 +124,10 @@ public final class Wechat {
                 }
             });
 
+    public Wechat() {
+    	
+    }
+    
     Wechat(String appId, String appSecret){
         this.appId = appId;
         this.appSecret = appSecret;
@@ -178,6 +184,10 @@ public final class Wechat {
     public JsSdks js(){
         return (JsSdks)components.getUnchecked(JSSDKS);
     }
+    
+    public Cards cards(){
+        return (Cards)components.getUnchecked(CARDS);
+    }
 
     private void injectWechat(Class<?> clazz, Object comp) throws NoSuchFieldException {
         Field wechat = clazz.getSuperclass().getDeclaredField("wechat");
@@ -229,7 +239,7 @@ public final class Wechat {
     Map<String, Object> doPost(String url, Map<String, Object> params) {
         String body = null;
         if (params != null && !params.isEmpty()){
-            body = Jsons.DEFAULT.toJson(params);
+            body = Jsons.EXCLUDE_EMPTY.toJson(params);
         }
         return doPost(url, body);
     }
@@ -250,7 +260,7 @@ public final class Wechat {
     <T extends WechatResponse> T doPost(String url, Object body, Class<T> responseClass) {
         Http http = Http.post(url);
         if (body != null) {
-            http.body(Jsons.DEFAULT.toJson(body));
+            http.body(Jsons.EXCLUDE_EMPTY.toJson(body));
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -276,7 +286,7 @@ public final class Wechat {
     Map<String, Object> doGet(String url, Map<String, Object> params) {
         Http http = Http.get(url);
         if (params != null && params.size() > 0){
-            http.body(Jsons.DEFAULT.toJson(params));
+            http.body(Jsons.EXCLUDE_EMPTY.toJson(params));
         }
         Map<String, Object> resp = http.request(MAP_STRING_OBJ_TYPE);
         Integer errcode = (Integer)resp.get(ERROR_CODE);
@@ -288,7 +298,7 @@ public final class Wechat {
 
     Map<String, Object> doUpload(String url, String fieldName, String fileName, InputStream input, Map<String, String> params){
         String json = Http.upload(url, fieldName, fileName, input, params);
-        Map<String, Object> resp = Jsons.DEFAULT.fromJson(json, MAP_STRING_OBJ_TYPE);
+        Map<String, Object> resp = Jsons.EXCLUDE_EMPTY.fromJson(json, MAP_STRING_OBJ_TYPE);
         Integer errcode = (Integer)resp.get(ERROR_CODE);
         if (errcode != null && errcode != 0){
             throw new WechatException(resp);

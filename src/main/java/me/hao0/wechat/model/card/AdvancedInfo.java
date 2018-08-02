@@ -7,9 +7,8 @@ import lombok.Data;
 /**
  * （卡券高级信息）字段
  * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056
- *
  * @author zJun
- * @date 2017年12月11日 下午2:30:45
+ * @date 2018年7月30日 下午7:16:41
  */
 @Data
 public class AdvancedInfo {
