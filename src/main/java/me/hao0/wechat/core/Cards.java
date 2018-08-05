@@ -8,6 +8,7 @@ import java.util.Map;
 import me.hao0.wechat.model.card.Card;
 import me.hao0.wechat.model.card.CardInfo;
 import me.hao0.wechat.model.card.CardStatus;
+import me.hao0.wechat.model.card.CodeGet;
 import me.hao0.wechat.model.card.Consume;
 import me.hao0.wechat.model.card.MemberCardActivateDTO;
 import me.hao0.wechat.model.card.Modifystock;
@@ -49,6 +50,9 @@ public class Cards extends Component {
      * 更改卡券信息接口
      */
     private static final String UPDATE = "https://api.weixin.qq.com/card/update?access_token=";
+    
+    /** 查询Code接口 */
+    private static final String GET_CODE = "https://api.weixin.qq.com/card/code/get?access_token=";
 
     /**
      * 核销Code接口
@@ -232,10 +236,47 @@ public class Cards extends Component {
     public Map<String, Object> update(CardInfo cardInfo) {
        return update(loadAccessToken(), cardInfo);
     }
+    
+    /**
+     * 查询code
+     * @param accessToken
+     * @param code 卡券code 必填
+     * @param cardId 卡券ID 非必填
+     * @param checkConsume 是否校验code核销状态 非必填  为true时不能核销将抛出异常
+     * @author zJun
+     * @date 2018年8月5日 下午5:04:57
+     */
+    public CodeGet getCode(String accessToken, String code, String cardId, Boolean checkConsume) {
+    	checkNotNullAndEmpty(accessToken, "accessToken");
+    	checkNotNullAndEmpty(code, "code");
+    	
+    	Map<String, Object> param = new HashMap<>(3);
+    	param.put("code", code);
+    	if(cardId != null && cardId.trim().length() > 0) {
+    		param.put("card_id", cardId);
+    	}
+    	if(checkConsume != null) {
+    		param.put("check_consume", checkConsume);
+    	}
+    	
+    	String url = GET_CODE + accessToken;
+    	return doPost(url, param, CodeGet.class);
+    }
+    
+    /**
+     * 查询code
+     * @param code 卡券code 必填
+     * @param cardId 卡券ID 非必填
+     * @param checkConsume 是否校验code核销状态 非必填  为true时不能核销将抛出异常
+     * @author zJun
+     * @date 2018年8月5日 下午5:04:57
+     */
+    public CodeGet getCode(String code, String cardId, Boolean checkConsume) {
+    	return getCode(loadAccessToken() ,code, cardId, checkConsume);
+    }
 
     /**
      * 核销Code接口
-     *
      * @param accessToken
      * @param consume
      * @author zJun
