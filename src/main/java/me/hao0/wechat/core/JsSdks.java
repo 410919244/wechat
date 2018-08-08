@@ -1,12 +1,19 @@
 package me.hao0.wechat.core;
 
+import static me.hao0.common.util.Preconditions.checkNotNull;
+import static me.hao0.common.util.Preconditions.checkNotNullAndEmpty;
+
+import java.util.Map;
+import java.util.UUID;
+
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
+
+import me.hao0.common.json.Jsons;
+import me.hao0.wechat.model.card.CardConfig;
 import me.hao0.wechat.model.js.Config;
 import me.hao0.wechat.model.js.Ticket;
 import me.hao0.wechat.model.js.TicketType;
-import java.util.Map;
-import static me.hao0.common.util.Preconditions.*;
 
 /**
  * JS-SDK组件
@@ -133,4 +140,37 @@ public final class JsSdks extends Component {
         String sign = Hashing.sha1().hashString(signStr, Charsets.UTF_8).toString().toLowerCase();
         return new Config(wechat.getAppId(), timestamp, nonStr, sign);
     }
+    
+    /**
+     * 获取卡券签名
+     * @param apiTicket
+     * @param cardId
+     * @param conf 可使用@Builder
+     * @return
+     * @author zJun
+     * @date 2018年8月8日 下午3:48:15
+     */
+    public CardConfig getCardConfig(String apiTicket, String cardId, CardConfig.Conf conf) {
+    	checkNotNullAndEmpty(cardId, "cardId");
+    	checkNotNullAndEmpty(conf.getNonce_str(), "nonce_str");
+    	conf.setTimestamp(String.valueOf(System.currentTimeMillis()/1000));
+    	String signStr = conf.signStr(cardId, apiTicket);
+    	String sign = Hashing.sha1().hashString(signStr, Charsets.UTF_8).toString().toLowerCase();
+    	conf.setSignature(sign);
+    	return new CardConfig(cardId, Jsons.EXCLUDE_EMPTY.toJson(conf));
+    }
+    
+    /**
+     * 获取卡券签名
+     * @param apiTicket
+     * @param cardId
+     * @return
+     * @author zJun
+     * @date 2018年8月8日 下午3:56:40
+     */
+    public CardConfig getCardConfig(String apiTicket, String cardId) {
+    	CardConfig.Conf conf = CardConfig.Conf.builder().nonce_str(UUID.randomUUID().toString().replaceAll("-", "")).build();
+    	return getCardConfig(apiTicket, cardId, conf);
+    }
+    
 }
