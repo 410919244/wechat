@@ -16,6 +16,10 @@ public class RecvTextMessage extends RecvMsg {
      * 文本内容
      */
     private String content;
+    
+    public RecvTextMessage() {
+    	
+    }
 
     public RecvTextMessage(RecvMsg m){
         super(m);
