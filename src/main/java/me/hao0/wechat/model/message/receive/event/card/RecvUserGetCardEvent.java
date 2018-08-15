@@ -52,6 +52,11 @@ public class RecvUserGetCardEvent extends RecvEvent {
      */
     private Boolean isRecommendByFriend;
 
+    /**
+     * unionId
+     */
+    private String unionId;
+    
     protected RecvUserGetCardEvent() {
 
     }
@@ -137,4 +142,12 @@ public class RecvUserGetCardEvent extends RecvEvent {
     public String getEventType() {
         return RecvEventType.USER_GET_CARD.value();
     }
+
+	public String getUnionId() {
+		return unionId;
+	}
+
+	public void setUnionId(String unionId) {
+		this.unionId = unionId;
+	}
 }

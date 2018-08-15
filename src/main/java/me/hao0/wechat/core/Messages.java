@@ -15,6 +15,7 @@ import com.google.common.collect.Maps;
 import me.hao0.common.xml.XmlReaders;
 import me.hao0.wechat.model.message.receive.RecvMessage;
 import me.hao0.wechat.model.message.receive.RecvMessageType;
+import me.hao0.wechat.model.message.receive.event.RecvAuditMiniEvent;
 import me.hao0.wechat.model.message.receive.event.RecvEvent;
 import me.hao0.wechat.model.message.receive.event.RecvEventType;
 import me.hao0.wechat.model.message.receive.event.RecvLocationEvent;
@@ -467,6 +468,18 @@ public final class Messages extends Component {
 
             case UNKNOW:
                 return new RecvUnknownEvent(event);
+               
+            case WEAPP_AUDIT_SUCCESS:
+            	RecvAuditMiniEvent result = new RecvAuditMiniEvent(event);
+            	result.setEvent(readers.getNodeStr("Event"));
+            	result.setSuccTime(readers.getNodeInt("SuccTime"));
+                return result;
+            case WEAPP_AUDIT_FAIL:
+            	result = new RecvAuditMiniEvent(event);
+            	result.setEvent(readers.getNodeStr("Event"));
+            	result.setSuccTime(readers.getNodeInt("FailTime"));
+            	result.setReason(readers.getNodeStr("Reason"));
+                return result;
 
             default:
                 throw new IllegalArgumentException(type.value() + " event is not support by system ");

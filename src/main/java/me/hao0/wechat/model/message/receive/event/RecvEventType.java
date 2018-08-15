@@ -172,9 +172,14 @@ public enum RecvEventType {
     /**
      * 门店审核事件
      */
-    POI_CHECK_NOTIFY("poi_check_notify", "新创建的门店在审核通过后，会以事件形式推送给商户填写的回调URL");
+    POI_CHECK_NOTIFY("poi_check_notify", "新创建的门店在审核通过后，会以事件形式推送给商户填写的回调URL"),
 
-
+    /** 小程序代码提交审核成功通知 */
+    WEAPP_AUDIT_SUCCESS("weapp_audit_success", "小程序代码提交审核成功通知"),
+    
+    /** 小程序代码提交审核失败通知 */
+    WEAPP_AUDIT_FAIL("weapp_audit_fail", "小程序代码提交审核失败通知");
+	
     private String value;
 
     private String desc;

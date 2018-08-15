@@ -18,6 +18,8 @@ public class RecvEvent extends RecvMessage {
      * @see RecvEvent
      */
     protected String eventType;
+    
+    private String event;
 
     public RecvEvent(){}
 
@@ -33,7 +35,15 @@ public class RecvEvent extends RecvMessage {
         return this.eventType;
     }
 
-    @Override
+    public String getEvent() {
+		return event;
+	}
+
+	public void setEvent(String event) {
+		this.event = event;
+	}
+
+	@Override
     public String getMsgType() {
         return RecvMessageType.EVENT.value();
     }

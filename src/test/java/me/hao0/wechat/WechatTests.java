@@ -1,5 +1,23 @@
 package me.hao0.wechat;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import me.hao0.common.model.Page;
 import me.hao0.wechat.core.Callback;
 import me.hao0.wechat.core.MenuBuilder;
@@ -20,9 +38,9 @@ import me.hao0.wechat.model.data.msg.MsgSendSummary;
 import me.hao0.wechat.model.data.msg.MsgSendSummaryHour;
 import me.hao0.wechat.model.data.user.UserCumulate;
 import me.hao0.wechat.model.data.user.UserSummary;
+import me.hao0.wechat.model.js.Config;
 import me.hao0.wechat.model.js.Ticket;
 import me.hao0.wechat.model.js.TicketType;
-import me.hao0.wechat.model.js.Config;
 import me.hao0.wechat.model.material.CommonMaterial;
 import me.hao0.wechat.model.material.MaterialType;
 import me.hao0.wechat.model.material.MaterialUploadType;
@@ -51,19 +69,6 @@ import me.hao0.wechat.model.message.send.SendMessageType;
 import me.hao0.wechat.model.message.send.SendPreviewMessage;
 import me.hao0.wechat.model.message.send.TemplateField;
 import me.hao0.wechat.model.user.Group;
-import org.junit.Before;
-import org.junit.Test;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-import static org.junit.Assert.*;
 
 /**
  * Author: haolin
