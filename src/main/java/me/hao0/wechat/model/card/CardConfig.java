@@ -1,5 +1,7 @@
 package me.hao0.wechat.model.card;
 
+import java.util.TreeSet;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,8 +47,19 @@ public class CardConfig {
 		 * @date 2018年8月8日 下午3:44:45
 		 */
 		public String signStr(String cardId, String apiTicket) {
-			return String.format("%s%s%s%s%s%s", str(apiTicket), str(timestamp), str(cardId), str(code), str(openid),
-					str(nonce_str));
+			TreeSet<String> treeSet =new TreeSet<>();
+	        treeSet.add(str(apiTicket));
+	        treeSet.add(str(timestamp));
+	        treeSet.add(str(nonce_str));
+	        treeSet.add(str(cardId));
+	        treeSet.add(str(code));
+	        treeSet.add(str(openid));
+			
+	        StringBuilder signStr = new StringBuilder("");
+	        for (String s : treeSet) {
+	            signStr.append(s);
+	        }
+			return signStr.toString();
 		}
 		
 		/**
