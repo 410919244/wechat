@@ -15,30 +15,45 @@ public enum UserSource {
     OTHER(0),
 
     /**
-     * 扫二维码
+     * 代表搜号码（即微信添加朋友页的搜索）
      */
-    SCAN(3),
-
+    SEARCH_NUMBER(1),
+    
     /**
      * 名片分享
      */
     CARD(17),
-
+    
     /**
-     * 代表搜号码（即微信添加朋友页的搜索）
+     * 扫二维码
      */
-    SEARCH_NUMBER(35),
-
-    /**
-     * 查询微信公众帐号
-     */
-    SEARCH_ACCOUNT(39),
+    SCAN(30),
 
     /**
      * 图文页右上角菜单
      */
-    MENU(43);
+    MENU(43),
 
+    /**
+     * 支付后关注
+     */
+	PAY(51),
+	
+	/**
+	 * 图文内
+	 */
+	MENU_NEI(57),
+	
+	/**
+	 * 公众号广告
+	 */
+	GUANG_GAO(75),
+	
+	/**
+	 * 朋友圈广告
+	 */
+	FRIEND_GUANG_GAO(78);
+	
     private Integer value;
 
     private UserSource(Integer scope){
