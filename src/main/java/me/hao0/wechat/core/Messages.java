@@ -6,6 +6,7 @@ import static me.hao0.common.util.Preconditions.checkNotNullAndEmpty;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,11 @@ public final class Messages extends Component {
     /**
      * 发送模板消息
      */
-    private static final String TEMPLATE_SEND = "http://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
+    private static final String TEMPLATE_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
+    
+
+    /** 获得模板ID */
+    private static final String API_ADD_TEMPLATE = "https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=";
 
     /**
      * 分组群发消息
@@ -651,6 +656,26 @@ public final class Messages extends Component {
         Map<String, Object> resp = doPost(url, params);
         Object msgId = resp.get("msgid");
         return msgId instanceof Long ? (Long) msgId : ((Integer) msgId).longValue();
+    }
+    
+    /**
+     * 添加模板并获得模板ID
+     * @param accessToken
+     * @param tempId 简短模板ID
+     * @return
+     * @author zJun
+     * @date 2018年9月12日 下午2:13:26
+     */
+    public String apiAddTemplate(String accessToken, String tempId) {
+    	  checkNotNullAndEmpty(accessToken, "accessToken");
+          checkNotNullAndEmpty(tempId, "tempId");
+          
+          String url = API_ADD_TEMPLATE + accessToken;
+          Map<String, String> params = new HashMap<>(1);
+          params.put("template_id_short", tempId);
+          Map<String, Object> resp = doPost(url, params);
+          return (String) resp.get("template_id");
+          
     }
 
     private Map<String, Object> buildTemplateParams(String openId, String templateId, String link, List<TemplateField> fields) {
