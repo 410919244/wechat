@@ -488,6 +488,8 @@ public final class Messages extends Component {
                 return result;
             case USER_DEL_CARD:
             	RecvUserDelCardEvent rudce = new RecvUserDelCardEvent(event);
+            	rudce.setCardId(readers.getNodeStr("CardId"));
+            	rudce.setUserCardCode(readers.getNodeStr("UserCardCode"));
             	return rudce;
             default:
                 throw new IllegalArgumentException(type.value() + " event is not support by system ");
