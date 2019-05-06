@@ -31,6 +31,7 @@ import me.hao0.wechat.model.message.receive.event.card.RecvCardPassCheckEvent;
 import me.hao0.wechat.model.message.receive.event.card.RecvSubmitMemberCardUserInfoEvent;
 import me.hao0.wechat.model.message.receive.event.card.RecvUpdateMemberCardEvent;
 import me.hao0.wechat.model.message.receive.event.card.RecvUserConsumeCardEvent;
+import me.hao0.wechat.model.message.receive.event.card.RecvUserDelCardEvent;
 import me.hao0.wechat.model.message.receive.event.card.RecvUserGetCardEvent;
 import me.hao0.wechat.model.message.receive.event.card.RecvUserPayFromPayCellEvent;
 import me.hao0.wechat.model.message.receive.event.menu.RecvMenuClickEvent;
@@ -485,7 +486,9 @@ public final class Messages extends Component {
             	result.setSuccTime(readers.getNodeInt("FailTime"));
             	result.setReason(readers.getNodeStr("Reason"));
                 return result;
-
+            case USER_DEL_CARD:
+            	RecvUserDelCardEvent rudce = new RecvUserDelCardEvent(event);
+            	return rudce;
             default:
                 throw new IllegalArgumentException(type.value() + " event is not support by system ");
         }
