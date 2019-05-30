@@ -67,7 +67,6 @@ public final class Messages extends Component {
      * 发送模板消息
      */
     private static final String TEMPLATE_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
-    
 
     /** 获得模板ID */
     private static final String API_ADD_TEMPLATE = "https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=";
@@ -680,7 +679,6 @@ public final class Messages extends Component {
           params.put("template_id_short", tempId);
           Map<String, Object> resp = doPost(url, params);
           return (String) resp.get("template_id");
-          
     }
 
     private Map<String, Object> buildTemplateParams(String openId, String templateId, String link, List<TemplateField> fields) {
