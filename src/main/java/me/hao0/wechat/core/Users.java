@@ -478,19 +478,6 @@ public final class Users extends Component {
 
         return Jsons.DEFAULT.fromJson(Jsons.DEFAULT.toJson(resp), UserInfo.class);
     }
-    
-    /**
-     * 获取用户详情
-     * @param openId
-     * @return
-     * @author zJun
-     * @date 2019年5月30日 下午9:11:38
-     */
-    public UserInfo getUserInfo(String openId) {
-        String url = GET_USER_INFO_AUTHED + loadAccessToken() + "&openid=" + openId;
-        Map<String, Object> resp = doGet(url);
-        return Jsons.DEFAULT.fromJson(Jsons.DEFAULT.toJson(resp), UserInfo.class);
-    }
 
     /**
      * 拉取用户列表信息
