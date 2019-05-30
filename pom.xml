@@ -59,6 +59,22 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<!-- 要将源码放上去，需要加入这个插件 -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -79,69 +95,6 @@
 	<profiles>
 		<profile>
 			<id>release</id>
-			<build>
-				<!-- <plugins> -->
-				<!-- <plugin> -->
-				<!-- <groupId>org.apache.maven.plugins</groupId> -->
-				<!-- <artifactId>maven-source-plugin</artifactId> -->
-				<!-- <version>2.2.1</version> -->
-				<!-- <executions> -->
-				<!-- <execution> -->
-				<!-- <phase>package</phase> -->
-				<!-- <goals> -->
-				<!-- <goal>jar-no-fork</goal> -->
-				<!-- </goals> -->
-				<!-- </execution> -->
-				<!-- </executions> -->
-				<!-- </plugin> -->
-				<!-- Javadoc -->
-				<!-- <plugin> -->
-				<!-- <groupId>org.apache.maven.plugins</groupId> -->
-				<!-- <artifactId>maven-javadoc-plugin</artifactId> -->
-				<!-- <version>2.10.3</version> -->
-				<!-- <executions> -->
-				<!-- <execution> -->
-				<!-- <phase>package</phase> -->
-				<!-- <goals> -->
-				<!-- <goal>jar</goal> -->
-				<!-- </goals> -->
-				<!-- </execution> -->
-				<!-- </executions> -->
-				<!-- </plugin> -->
-				<!-- GPG -->
-				<!-- <plugin> -->
-				<!-- <groupId>org.apache.maven.plugins</groupId> -->
-				<!-- <artifactId>maven-gpg-plugin</artifactId> -->
-				<!-- <version>1.6</version> -->
-				<!-- <executions> -->
-				<!-- <execution> -->
-				<!-- <phase>verify</phase> -->
-				<!-- <goals> -->
-				<!-- <goal>sign</goal> -->
-				<!-- </goals> -->
-				<!-- </execution> -->
-				<!-- </executions> -->
-				<!-- </plugin> -->
-				<!-- </plugins> -->
-				<!-- 要将源码放上去，需要加入这个插件 -->
-				<plugins>
-					<plugin>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>2.1</version>
-						<configuration>
-							<attach>true</attach>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>compile</phase>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
 		</profile>
 	</profiles>
 
