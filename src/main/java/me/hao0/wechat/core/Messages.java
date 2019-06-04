@@ -70,6 +70,9 @@ public final class Messages extends Component {
 
     /** 获得模板ID */
     private static final String API_ADD_TEMPLATE = "https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=";
+    
+    /** 删除模板 */
+    private static final String DEL_PRIVATE_TEMPLATE = "https://api.weixin.qq.com/cgi-bin/template/del_private_template?access_token=";
 
     /**
      * 分组群发消息
@@ -675,10 +678,26 @@ public final class Messages extends Component {
           checkNotNullAndEmpty(tempId, "tempId");
           
           String url = API_ADD_TEMPLATE + accessToken;
-          Map<String, String> params = new HashMap<>(1);
+          Map<String, String> params = new HashMap<>(3);
           params.put("template_id_short", tempId);
           Map<String, Object> resp = doPost(url, params);
           return (String) resp.get("template_id");
+    }
+    
+    /**
+     * 删除模板
+     * @param accessToken
+     * @param tempId
+     * @author zJun
+     * @date 2019年6月4日 上午10:11:27
+     */
+    public void deleteTemplate(String accessToken, String tempId) {
+    	checkNotNullAndEmpty(accessToken, "accessToken");
+        checkNotNullAndEmpty(tempId, "tempId");
+        Map<String, String> params = new HashMap<>(3);
+        params.put("template_id", tempId);
+    	String url = DEL_PRIVATE_TEMPLATE + accessToken;
+    	doPost(url, params);
     }
 
     private Map<String, Object> buildTemplateParams(String openId, String templateId, String link, List<TemplateField> fields) {
