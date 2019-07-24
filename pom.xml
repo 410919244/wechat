@@ -6,7 +6,7 @@
 
 	<groupId>me.hao0</groupId>
 	<artifactId>wechat</artifactId>
-	<version>wmeimob.1.9.3-SNAPSHOT</version>
+	<version>wmeimob.1.10.3-SNAPSHOT</version>
 
 	<name>wechat</name>
 	<description>A Lightweight Wechat Component</description>

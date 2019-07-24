@@ -96,6 +96,54 @@ public final class QrCodes extends Component {
         Qrcode qr = Jsons.DEFAULT.fromJson(Jsons.DEFAULT.toJson(resp), Qrcode.class);
         return showQrcode(qr.getTicket());
     }
+    
+    /**
+     * 获取临时二维码对象
+     * @param accessToken accessToken
+     * @param sceneId 业务场景ID，32位非0整型
+     * @param expire 该二维码有效时间，以秒为单位。 最大不超过604800（即7天）
+     * @return 临时二维码链接，或抛WechatException
+     */
+    public Qrcode getTempQrcodeObj(String accessToken, String sceneId, Integer expire){
+        checkNotNullAndEmpty(accessToken, "accessToken");
+        checkNotNullAndEmpty(sceneId, "sceneId");
+        checkArgument(expire != null && expire > 0, "expire must > 0");
+
+        String url = TICKET_GET + accessToken;
+        Map<String, Object> params = buildQrcodeParams(sceneId, null, QrcodeType.QR_SCENE);
+        params.put("expire_seconds", expire);
+
+        Map<String, Object> resp = doPost(url, params);
+        Qrcode qr = Jsons.DEFAULT.fromJson(Jsons.DEFAULT.toJson(resp), Qrcode.class);
+        return qr;
+    }
+    
+    /**
+     * 获取临时二维码对象
+     * @param sceneId 业务场景ID，32位非0整型
+     * @param expire 该二维码有效时间，以秒为单位。 最大不超过604800（即7天）
+     * @return 临时二维码链接，或抛WechatException
+     */
+	public Qrcode getTempQrcodeObj(String sceneId, Integer expire) {
+		return getTempQrcodeObj(loadAccessToken(), sceneId, expire);
+	}
+	
+	 /**
+     * 获取临时二维码对象
+     * @param accessToken accessToken
+     * @param sceneId 业务场景ID，32位非0整型
+     * @param expire 该二维码有效时间，以秒为单位。 最大不超过604800（即7天）
+     * @return 临时二维码链接，或抛WechatException
+     */
+	public void getTempQrcodeObj(final String accessToken, final String sceneId, final Integer expire,
+			Callback<Qrcode> cb) {
+		doAsync(new AsyncFunction<Qrcode>(cb) {
+			@Override
+			public Qrcode execute() {
+				return getTempQrcodeObj(accessToken, sceneId, expire);
+			}
+		});
+	}
 
     /**
      * 获取永久二维码
@@ -147,6 +195,48 @@ public final class QrCodes extends Component {
         Qrcode qr = Jsons.DEFAULT.fromJson(Jsons.DEFAULT.toJson(resp), Qrcode.class);
 
         return showQrcode(qr.getTicket());
+    }
+    
+    /**
+     * 获取永久二维码对象
+     * @param accessToken accessToken
+     * @param sceneId 业务场景ID，最大值为100000（目前参数只支持1--100000）
+     * @return 永久二维码链接，或抛WechatException
+     */
+    public Qrcode getPermQrcodeObj(String accessToken, String sceneId){
+        checkNotNullAndEmpty(accessToken, "accessToken");
+        checkNotNullAndEmpty(sceneId, "sceneId");
+
+        String url = TICKET_GET + accessToken;
+        Map<String, Object> params = buildQrcodeParams(sceneId, null, QrcodeType.QR_LIMIT_SCENE);
+
+        Map<String, Object> resp = doPost(url, params);
+        Qrcode qr = Jsons.DEFAULT.fromJson(Jsons.DEFAULT.toJson(resp), Qrcode.class);
+        return qr;
+    }
+    
+    /**
+     * 获取永久二维码对象
+     * @param sceneId 业务场景ID，最大值为100000（目前参数只支持1--100000）
+     * @return 永久二维码链接，或抛WechatException
+     */
+    public Qrcode getPermQrcodeObj(String sceneId){
+        return getPermQrcodeObj(loadAccessToken(), sceneId);
+    }
+    
+    /**
+     * 获取永久二维码对象
+     * @param accessToken accessToken
+     * @param sceneId 业务场景ID，最大值为100000（目前参数只支持1--100000）
+     * @return 永久二维码链接，或抛WechatException
+     */
+    public void getPermQrcodeObj(final String accessToken, final String sceneStr, Callback<Qrcode> cb){
+        doAsync(new AsyncFunction<Qrcode>(cb) {
+            @Override
+            public Qrcode execute() {
+                return getPermQrcodeObj(accessToken, sceneStr);
+            }
+        });
     }
     
     
