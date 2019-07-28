@@ -290,6 +290,49 @@ public final class QrCodes extends Component {
 
         return showQrcode(qr.getTicket());
     }
+    
+    /**
+     * 获取永久二维码
+     * @param accessToken accessToken
+     * @param sceneStr	场景值ID（字符串形式的ID），字符串类型，长度限制为1到64，仅永久二维码支持此字段   
+     * @return 永久二维码链接，或抛WechatException
+     */
+	public Qrcode getPermQrcodeBySceneStrQrcodeObj(String accessToken, String sceneStr) {
+		checkNotNullAndEmpty(accessToken, "accessToken");
+		checkNotNullAndEmpty(sceneStr, "sceneStr");
+
+		String url = TICKET_GET + accessToken;
+		Map<String, Object> params = buildQrcodeParams(null, sceneStr, QrcodeType.QR_LIMIT_STR_SCENE);
+
+		Map<String, Object> resp = doPost(url, params);
+		Qrcode qr = Jsons.DEFAULT.fromJson(Jsons.DEFAULT.toJson(resp), Qrcode.class);
+		return qr;
+	}
+	
+    /**
+     * 获取永久二维码
+     * @param accessToken accessToken
+     * @param sceneStr	场景值ID（字符串形式的ID），字符串类型，长度限制为1到64，仅永久二维码支持此字段   
+     * @return 永久二维码链接，或抛WechatException
+     */
+	public Qrcode getPermQrcodeBySceneStrQrcodeObj(String sceneStr) {
+		return getPermQrcodeBySceneStrQrcodeObj(loadAccessToken(), sceneStr);
+	}
+	
+	/**
+     * 根据场景字符串获取永久二维码
+     * @param accessToken accessToken
+     * @param sceneStr	场景值ID（字符串形式的ID），字符串类型，长度限制为1到64，仅永久二维码支持此字段
+     * @param cb 回调
+     */
+    public void getPermQrcodeBySceneStrQrcodeObj(final String accessToken, final String sceneStr, Callback<Qrcode> cb){
+        doAsync(new AsyncFunction<Qrcode>(cb) {
+            @Override
+            public Qrcode execute() {
+                return getPermQrcodeBySceneStrQrcodeObj(accessToken, sceneStr);
+            }
+        });
+    }
 
     /**
      * 生成二维码参数，首先尝试使用 sceneId，再使用sceneStr
