@@ -216,7 +216,7 @@ public final class Wechat {
         }
     }
 
-    String loadAccessToken(){
+    public String loadAccessToken(){
         String accessToken = tokenLoader.get();
         if (Strings.isNullOrEmpty(accessToken)){
             AccessToken token = base().accessToken();
